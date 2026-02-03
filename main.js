@@ -124,3 +124,71 @@ document.getElementById('fetch-btn').onclick = async () => {
         fetchBtn.disabled = false;
     }
 };
+
+// '저장하기' 버튼 클릭 이벤트
+document.getElementById('save-btn').onclick = async () => {
+    // 1. 입력값 긁어오기
+    const url = document.getElementById('url-input').value;
+    const title = document.getElementById('title-input').value;
+    const thumbnail = document.getElementById('preview-area').dataset.imgUrl || '';
+    const one_liner = document.getElementById('oneliner-input').value;
+    const my_thought = document.getElementById('thought-input').value;
+    const recorded_at = document.getElementById('date-input').value;
+
+    // 2. 유효성 검사 (필수 항목 확인)
+    if (!url || !one_liner) {
+        alert('URL과 한 줄 요약은 필수입니다!');
+        return;
+    }
+
+    const saveBtn = document.getElementById('save-btn');
+    saveBtn.innerText = '저장 중...';
+    saveBtn.disabled = true;
+
+    try {
+        // 3. Supabase DB에 데이터 삽입 (Insert)
+        // 주의: user_id는 일단 테스트를 위해 생략하거나 
+        // Supabase에서 RLS 설정을 'Everyone'으로 잠시 풀었을 때 작동합니다.
+        const { data, error } = await _supabase
+            .from('posts')
+            .insert([
+                { 
+                    url, 
+                    title, 
+                    thumbnail, 
+                    one_liner, 
+                    my_thought, 
+                    recorded_at 
+                }
+            ]);
+
+        if (error) throw error;
+
+        // 4. 성공 시 처리
+        alert('인사이트가 성공적으로 기록되었습니다! 🎉');
+        
+        // 입력창 비우고 모달 닫기
+        document.getElementById('modal-overlay').style.display = 'none';
+        resetModal();
+        
+        // 화면 리스트 새로고침
+        fetchInsights();
+
+    } catch (error) {
+        console.error('저장 실패:', error);
+        alert('저장에 실패했습니다: ' + error.message);
+    } finally {
+        saveBtn.innerText = '저장하기';
+        saveBtn.disabled = false;
+    }
+};
+
+// 모달 입력창 초기화 함수
+function resetModal() {
+    document.getElementById('url-input').value = '';
+    document.getElementById('title-input').value = '';
+    document.getElementById('oneliner-input').value = '';
+    document.getElementById('thought-input').value = '';
+    document.getElementById('preview-area').style.display = 'none';
+    document.getElementById('preview-img').src = '';
+}
