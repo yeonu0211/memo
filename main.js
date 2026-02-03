@@ -9,6 +9,28 @@ window.onload = () => {
     // 기존 기능: 데이터 불러오기
     fetchInsights();
 
+const enterBtn = document.getElementById('enter-btn');
+const book = document.getElementById('main-book');
+const introScreen = document.getElementById('intro-screen');
+const mainContent = document.getElementById('main-content');
+
+enterBtn.onclick = () => {
+    // 1. 책 열리는 애니메이션 시작
+    book.classList.add('open');
+    enterBtn.style.opacity = '0';
+
+    // 2. 1.5초 뒤 인트로 화면 사라지고 메인 컨텐츠 등장
+    setTimeout(() => {
+        introScreen.style.opacity = '0';
+        setTimeout(() => {
+            introScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            // 메인 화면이 켜지면서 데이터 다시 호출 (레이아웃 깨짐 방지)
+            fetchInsights();
+        }, 1000);
+    }, 1500);
+};
+    
     // 신규 기능: 모달 제어 로직
     const modal = document.getElementById('modal-overlay');
     const addBtn = document.getElementById('add-btn');
