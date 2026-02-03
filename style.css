@@ -126,3 +126,59 @@ header h1 { font-size: 1.5rem; margin: 0; }
     .container { flex-direction: column; }
     .sidebar { flex: none; width: 100%; }
 }
+
+/* 모달 배경 (어둡게) */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none; /* 기본적으로 숨김 */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* 모달 박스 */
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+#close-modal {
+    background: none; border: none; font-size: 1.5rem; cursor: pointer;
+}
+
+/* 입력 그룹 */
+.input-group { margin-bottom: 1.2rem; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
+.input-group input, .input-group textarea {
+    width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;
+}
+
+/* URL 불러오기 버튼 포함 입력창 */
+.url-fetch-wrapper { display: flex; gap: 8px; }
+#fetch-btn {
+    white-space: nowrap; background: #eee; border: 1px solid #ddd; border-radius: 8px; padding: 0 1rem; cursor: pointer;
+}
+
+/* 미리보기 영역 */
+.preview-area {
+    display: flex; gap: 12px; background: #f9f9f9; padding: 10px; border-radius: 8px; margin-bottom: 1rem;
+}
+#preview-img { width: 80px; height: 60px; object-fit: cover; border-radius: 4px; }
+
+#save-btn {
+    width: 100%; padding: 1rem; background: var(--primary-color); color: white;
+    border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+}
