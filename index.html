@@ -52,5 +52,48 @@
             </div>
         </section>
     </main>
+
+<div id="modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>새 인사이트 기록하기</h2>
+            <button id="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label for="url-input">뉴스레터 / 기사 URL</label>
+                <div class="url-fetch-wrapper">
+                    <input type="text" id="url-input" placeholder="https://..." />
+                    <button id="fetch-btn">불러오기</button>
+                </div>
+            </div>
+            
+            <div id="preview-area" class="preview-area" style="display:none;">
+                <img id="preview-img" src="" alt="미리보기">
+                <div class="preview-info">
+                    <input type="text" id="title-input" placeholder="제목을 입력하세요">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="oneliner-input">한 줄 요약 (핵심)</label>
+                <input type="text" id="oneliner-input" placeholder="이 글의 핵심은 무엇인가요?">
+            </div>
+
+            <div class="input-group">
+                <label for="thought-input">내 생각 (선택)</label>
+                <textarea id="thought-input" placeholder="나중에 참고할 메모를 적어주세요"></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="date-input">읽은 날짜</label>
+                <input type="date" id="date-input">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="save-btn">저장하기</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
