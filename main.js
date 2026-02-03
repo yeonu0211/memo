@@ -84,3 +84,43 @@ function displayInsights(insights) {
         listContainer.appendChild(card);
     });
 }
+
+// '불러오기' 버튼 클릭 이벤트
+document.getElementById('fetch-btn').onclick = async () => {
+    const url = document.getElementById('url-input').value;
+    const fetchBtn = document.getElementById('fetch-btn');
+    const previewArea = document.getElementById('preview-area');
+
+    if (!url) {
+        alert('URL을 입력해주세요!');
+        return;
+    }
+
+    fetchBtn.innerText = '불러오는 중...';
+    fetchBtn.disabled = true;
+
+    try {
+        // Link Preview API 호출 (무료 데모 서버 사용)
+        const response = await fetch(`https://api.linkpreview.net/?key=123456&q=${encodeURIComponent(url)}`);
+        const data = await response.json();
+
+        if (data.title) {
+            // 미리보기 영역 보이기 및 데이터 채우기
+            previewArea.style.display = 'flex';
+            document.getElementById('preview-img').src = data.image || 'https://via.placeholder.com/150';
+            document.getElementById('title-input').value = data.title;
+            
+            // 전역 변수나 데이터 속성에 이미지 주소 저장 (나중에 DB 저장용)
+            previewArea.dataset.imgUrl = data.image;
+        } else {
+            alert('정보를 가져올 수 없는 URL입니다. 직접 입력해주세요.');
+            previewArea.style.display = 'flex'; // 입력창이라도 띄워줌
+        }
+    } catch (error) {
+        console.error('URL 파싱 에러:', error);
+        alert('데이터를 불러오는 중 오류가 발생했습니다.');
+    } finally {
+        fetchBtn.innerText = '불러오기';
+        fetchBtn.disabled = false;
+    }
+};
